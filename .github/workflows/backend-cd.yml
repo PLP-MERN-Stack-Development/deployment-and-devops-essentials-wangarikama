@@ -1,0 +1,19 @@
+name: Backend CD (Deploy to Render)
+
+on:
+  push:
+    branches: [ "main" ]
+    paths:
+      - 'server/**'
+
+jobs:
+  deploy-backend:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push'
+    
+    steps:
+    - name: Trigger Render Deployment
+      run: |
+        # In a real project, store the Deploy Hook URL in GitHub Secrets
+        curl -X POST ${{ secrets.RENDER_DEPLOY_HOOK }}
+        echo "Triggering Render Deploy Hook..."
